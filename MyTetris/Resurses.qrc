@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/Images">
+        <file>Images/new.svg</file>
+        <file>Images/exit.svg</file>
+        <file>Images/load.ico</file>
+        <file>Images/save.ico</file>
+        <file>Images/main.svg</file>
+        <file>Images/info.ico</file>
+        <file>Images/back.jpg</file>
+        <file>Images/mode.svg</file>
+    </qresource>
+</RCC>
