@@ -23,6 +23,7 @@ class Scene : public IScene
     Q_OBJECT
 public:
     Scene(size_t rows, size_t columns, QWidget *parent = nullptr);
+    virtual ~Scene();
 
     void clear();
 

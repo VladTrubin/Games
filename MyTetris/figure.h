@@ -7,13 +7,14 @@ enum Direction : unsigned char { DOWN, UP };
 
 class IFigure
 {
-
+public:
+    virtual ~IFigure() = 0;
 };
 
-class FigureV : IFigure
+class FigureV : public IFigure
 {
+protected:
     static constexpr size_t cellsN = 3;
-
 
 public:
     FigureV();
