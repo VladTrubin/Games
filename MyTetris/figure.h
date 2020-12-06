@@ -20,11 +20,12 @@ public:
     FigureV();
     virtual ~FigureV();
 
-    void setRow(size_t row);
-    void setColumn(size_t column);
+    void setRow(size_t row)         { _row    = row;    }
+    void setColumn(size_t column)   { _column = column; }
 
     inline size_t row()     { return _row;      }
     inline size_t column()  { return _column;   }
+    inline size_t cells()   { return cellsN;    }
 
     void rotateColors(Direction dir);
     void makeRandomColors();

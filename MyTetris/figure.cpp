@@ -13,10 +13,12 @@ FigureV::FigureV()
     makeRandomColors();
 }
 
+
 FigureV::~FigureV()
 {
 
 }
+
 
 void FigureV::makeRandomColors()
 {

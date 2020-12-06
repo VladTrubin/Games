@@ -9,6 +9,7 @@ TRANSLATIONS += tetris_ru.ts
 SOURCES += \
     controller.cpp \
     figure.cpp \
+    figureview.cpp \
     main.cpp \
     mainwindow.cpp \
     scenemodel.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     controller.h \
     figure.h \
+    figureview.h \
     mainwindow.h \
     scenemodel.h \
     sceneview.h

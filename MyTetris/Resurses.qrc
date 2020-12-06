@@ -8,5 +8,6 @@
         <file>Images/info.ico</file>
         <file>Images/back.jpg</file>
         <file>Images/mode.svg</file>
+        <file>Images/play.svg</file>
     </qresource>
 </RCC>

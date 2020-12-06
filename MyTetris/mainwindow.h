@@ -8,6 +8,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class IScene;
+class Controller;
 
 class MainWindow : public QMainWindow
 {
@@ -19,17 +20,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-//public slots:
-//    void newGame();
-//    void exitGame();
-//    void saveGame();
-//    void loadGame();
-//    void pauseGame();
-//    void resumeGame();
-
-
 private:
     Ui::MainWindow  *ui;
-    IScene          *scene;
+    IScene          *_scene;
+    Controller      *_controller;
 };
 #endif // MAINWINDOW_H

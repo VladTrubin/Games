@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class IController;
+class Controller;
 class IScene;
 
 class IView : public QWidget
@@ -28,28 +28,28 @@ public:
     virtual ~SceneView();
 
     void setWidgetSize();
-    void setModel(IScene *model)        { _model = model;       }
+    void setModel(IScene *model)            { _model = model;       }
+    void setController(Controller *ctrl)    { _controller = ctrl;   }
 
-    size_t rows()                       { return _rows;         }
-    size_t columns()                    { return _columns;      }
+    size_t rows()                           { return _rows;         }
+    size_t columns()                        { return _columns;      }
 
 public slots:
-    void   setRows(size_t rows)         { _rows = rows;         }
-    void   setColumns(size_t columns)   { _columns = columns;   }
+    void   setRows(size_t rows)             { _rows = rows;         }
+    void   setColumns(size_t columns)       { _columns = columns;   }
 
 protected:
     virtual void paintEvent(QPaintEvent *event)         override;
     virtual void keyPressEvent(QKeyEvent *event)        override;
     virtual void keyReleaseEvent(QKeyEvent *event)      override;
-    virtual void mousePressEvent(QMouseEvent *event)    override;
-    virtual void mouseReleaseEvent(QMouseEvent *event)  override;
 
-    void drawScene();
+    void drawScene(QPainter *painter);
+    void drawFigure(QPainter *painter);
 
 
 private:
     IScene      *_model;
-    IController *_controller;
+    Controller  *_controller;
     uint        _rows, _columns;
 };
 
