@@ -3,22 +3,25 @@
 
 #include <QWidget>
 
-class IFigure;
+class FigureV;
 
 class FigureView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FigureView(QWidget *parent = nullptr, IFigure *figure = nullptr);
+    explicit FigureView(QWidget *parent = nullptr, FigureV *figure = nullptr, size_t sideLen = 30);
 
-            void drawFigure(QPainter *painter);
     virtual void paintEvent(QPaintEvent *event) override;
+            void drawFigure();
+            void setMovable(bool movable)   { _movable = movable;   }
 
-public slots:
-    void newFigure();
+//public slots:
+//    void newFigure();
 
 private:
-    IFigure *_figure;
+    FigureV *_figure;
+    size_t  _sideLen;
+    bool    _movable{false};
 };
 
 #endif // FIGUREVIEW_H

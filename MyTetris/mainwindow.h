@@ -22,7 +22,5 @@ public:
 
 private:
     Ui::MainWindow  *ui;
-    IScene          *_scene;
-    Controller      *_controller;
 };
 #endif // MAINWINDOW_H

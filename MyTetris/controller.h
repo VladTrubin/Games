@@ -10,26 +10,28 @@ class IView;
 class Controller : public QObject
 {
     Q_OBJECT
+
 private:
-    static constexpr int stepTimeInterval = 444;
+    static constexpr int stepTimeInterval = 500;
 
 public:
     explicit Controller(IScene *model, IView *view, QObject *parent = nullptr);
 
+    void doAction(void(IScene::*action)());
+
     void doStart();
     void doStep();
+    void togglePause();
     void doPause();
     void doResume();
 
     void moveLeft();
     void moveRight();
 
-    void colorDown();
-    void colorUp();
+    void rotateDown();
+    void rotateUp();
 
     void doDrop(bool enabled);
-
-    void doRotate();
 
     void doSave();
     void doLoad();

@@ -9,6 +9,15 @@ Controller::Controller(IScene *model, IView *view, QObject *parent) : QObject(pa
     connect(&_timer, &QTimer::timeout, this, &Controller::doStep);
 }
 
+void Controller::doAction(void (IScene::*action)())
+{
+    if (not _timer.isActive())
+        return;
+
+    (_model->*action)();
+    _view->repaint();
+}
+
 
 void Controller::doStart()
 {
@@ -24,9 +33,10 @@ void Controller::doStep()
 
     if (not _model->gameOn())
     {
+        _timer.stop();
         auto res = QMessageBox::information(_view, QStringLiteral("Results"),
                                  QString("Your score: %1! Can we play again?").arg(_model->score()),
-                                 QMessageBox::No, QMessageBox::Reset);
+                                 QMessageBox::No, QMessageBox::Ok);
         if (res == QMessageBox::No)
         {
             // TODO Exit app
@@ -36,6 +46,11 @@ void Controller::doStep()
             doStart();
         }
     }
+}
+
+void Controller::togglePause()
+{
+    _timer.isActive() ? doPause() : doResume();
 }
 
 
@@ -53,38 +68,37 @@ void Controller::doResume()
 
 void Controller::moveLeft()
 {
-    _model->moveLeft();
+    doAction(&IScene::moveLeft);
 }
 
 
 void Controller::moveRight()
 {
-    _model->moveRight();
+    doAction(&IScene::moveRight);
 }
 
 
-void Controller::colorDown()
+void Controller::rotateDown()
 {
-    _model->colorDown();
+    doAction(&IScene::rotateDown);
 }
 
 
-void Controller::colorUp()
+void Controller::rotateUp()
 {
-    _model->colorUp();
+    doAction(&IScene::rotateUp);
 }
 
 
 void Controller::doDrop(bool enabled)
 {
-    enabled ? _model->startDrop() : _model->stopDrop();
+    if (_timer.isActive())
+    {
+        auto currTime = stepTimeInterval / (enabled ? _model->maxSpeed() : _model->speed());
+        _timer.start(currTime);
+    }
 }
 
-
-void Controller::doRotate()
-{
-
-}
 
 
 void Controller::doSave()

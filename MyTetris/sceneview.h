@@ -10,7 +10,7 @@ class IView : public QWidget
 {
     Q_OBJECT
 protected:
-    static constexpr size_t sizeCell = 30;
+    static constexpr size_t sizeCell = 50;
 
 public:
     explicit IView(QWidget *parent) : QWidget(parent) { }
@@ -33,6 +33,7 @@ public:
 
     size_t rows()                           { return _rows;         }
     size_t columns()                        { return _columns;      }
+    size_t sideLen()                        { return sizeCell;      }
 
 public slots:
     void   setRows(size_t rows)             { _rows = rows;         }
@@ -44,7 +45,6 @@ protected:
     virtual void keyReleaseEvent(QKeyEvent *event)      override;
 
     void drawScene(QPainter *painter);
-    void drawFigure(QPainter *painter);
 
 
 private:
