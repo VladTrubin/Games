@@ -8,6 +8,9 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QIntValidator>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,8 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Set focus
     ui->sceneView->setFocus();
-    ui->NewGame->setFocusPolicy(Qt::FocusPolicy::NoFocus);
-//    ui->rightVLay->setAlignment(ui->nextFig, Qt::AlignCenter);
 
     // Valid input for speed
     auto valid = new QIntValidator(0, 9, ui->speedNum);
@@ -44,11 +45,31 @@ MainWindow::MainWindow(QWidget *parent)
     ui->rightVLay->addWidget(nextFigView, 0, Qt::AlignCenter);
     currFigView->setMovable(true);
 
+    // Разбавим скуку красивой музыкой
+    auto player   = new QMediaPlayer(this);
+    auto playlist = new QMediaPlaylist(player);
+
+    player->setPlaylist(playlist);
+    playlist->addMedia(QUrl("qrc:/Music/Music/Night.mp3"));
+    playlist->setPlaybackMode(QMediaPlaylist::Loop);
+    player->setVolume(60);
+
     // Connections
+    connect(ui->Music,    &QPushButton::toggled,     this, [=]()
+    {
+        if (ui->Music->isChecked()) { player->play();  ui->Music->setText(QStringLiteral("&Playing..."));   }
+        else                        { player->pause(); ui->Music->setText(QStringLiteral("&Play Music"));   }
+    });
+
+    connect(controller,   &Controller::speedChanged, [&] (size_t val)
+    {
+        ui->speedNum->setText(QString::number(val));
+    });
     connect(ui->speedNum, &QLineEdit::textChanged,  controller,  &Controller::setSpeed);
     connect(scene,        &Scene::upCurrFigure,     currFigView, &FigureView::drawFigure);
     connect(scene,        &Scene::upNextFigure,     nextFigView, &FigureView::drawFigure);
     connect(scene,        &Scene::scoreChanged,     ui->scoreNum, QOverload<int>::of(&QLCDNumber::display));
+    connect(scene,        &Scene::multiChanged,     ui->multiNum, QOverload<int>::of(&QLCDNumber::display));
 
     connect(ui->Exit,          &QPushButton::clicked, ui->actionExit,    &QAction::trigger);
     connect(ui->NewGame,       &QPushButton::clicked, ui->actionNewGame, &QAction::trigger);

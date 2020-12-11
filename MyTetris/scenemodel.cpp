@@ -78,11 +78,23 @@ void Scene::doStep()
             findSame(_currFig->row()+i, _currFig->column(), _currFig->row()+i, _currFig->column());
             if (_same.size() >= cellsForFire)
             {
-                setScore(_score+_same.size());
+                setScore(_score+(_same.size()*_multiplier));
                 burn();
+                _needMulti = true;
             }
             _same.clear();
         }
+
+        if (_needMulti)
+        {
+            ++_multiplier;
+            _needMulti = false;
+        }
+        else
+        {
+            _multiplier = 1;
+        }
+        emit multiChanged(_multiplier);
 
         // настраиваем фигуры после столкновения
         _currFig->getColors(_nextFig);
@@ -173,7 +185,10 @@ void Scene::burn()
     {
         findSame(cell.first, cell.second, cell.first, cell.second);
         if (_same.size() >= cellsForFire)
+        {
+            setScore(_score+(_same.size()*_multiplier));
             burn();
+        }
         _same.clear();
     }
 }
@@ -252,6 +267,9 @@ void Scene::newGame()
     _nextFig->makeRandomColors();
     _nextFig->setRow(0u);
     _nextFig->setColumn(0u);
+
+    _speed = 1;
+    emit speedChanged(_speed);
 
     // Флаги видимости фигур
     _currFig->setHide(false);    _nextFig->setHide(false);

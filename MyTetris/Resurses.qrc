@@ -16,4 +16,7 @@
         <file>Images/exitMHover.png</file>
         <file>Images/exitM.png</file>
     </qresource>
+    <qresource prefix="/Music">
+        <file>Music/Night.mp3</file>
+    </qresource>
 </RCC>

@@ -7,6 +7,7 @@
 Controller::Controller(IScene *model, IView *view, QObject *parent) : QObject(parent), _model(model), _view(view)
 {
     connect(&_timer, &QTimer::timeout, this, &Controller::doStep);
+    connect(_model,  &IScene::speedChanged, this, &Controller::speedChanged);
 }
 
 void Controller::doAction(void (IScene::*action)())
@@ -39,7 +40,7 @@ void Controller::doStep()
                                  QMessageBox::No, QMessageBox::Ok);
         if (res == QMessageBox::No)
         {
-            // TODO Exit app
+            // TODO Exit app?
         }
         else
         {
@@ -63,6 +64,7 @@ void Controller::doPause()
 void Controller::doResume()
 {
     _timer.start(stepTimeInterval);
+    speedChanged(_model->speed());
 }
 
 

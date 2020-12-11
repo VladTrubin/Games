@@ -39,6 +39,9 @@ public:
 public slots:
     void setSpeed(const QString& speed);
 
+signals:
+    void speedChanged(size_t);
+
 private:
     IScene  *_model;
     IView   *_view;

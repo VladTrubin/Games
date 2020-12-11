@@ -41,6 +41,9 @@ public:
     virtual size_t  maxSpeed()        = 0;
     virtual size_t  minSpeed()        = 0;
 
+signals:
+    void speedChanged(size_t);
+
 protected:
     bool    _gameOn{false};
 };
@@ -93,6 +96,7 @@ signals:
     void scoreChanged(size_t);
     void upCurrFigure();
     void upNextFigure();
+    void multiChanged(size_t);
 
 private:
     void setInitFigPos(FigureV *figure);
@@ -104,7 +108,8 @@ private:
     size_t      _rows, _columns;
     size_t      _score{0u};
     size_t      _speed{MinSpeed};
-    bool        _haveDrop{false};
+    size_t      _multiplier{1};
+    bool        _haveDrop{false}, _needMulti{false};
 };
 
 #endif // SCENEMODEL_H
