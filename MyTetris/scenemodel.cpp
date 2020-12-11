@@ -69,11 +69,7 @@ void Scene::doStep()
         for (size_t i = 0; i < _currFig->cells(); ++i)
         {
             QColor curColor = _grid[_currFig->row()+i][_currFig->column()];
-            if (curColor == prevColor)
-            {
-                prevColor = curColor;
-                continue;
-            }
+            if (curColor == prevColor) continue;
 
             findSame(_currFig->row()+i, _currFig->column(), _currFig->row()+i, _currFig->column());
             if (_same.size() >= cellsForFire)
